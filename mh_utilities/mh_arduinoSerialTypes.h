@@ -9,6 +9,8 @@
 // - dataBitsEnum is an enumerated type to represent data bit options
 // - parityEnum is an enumerated type to represent parity options
 // - stopBitsEnum is an enumerated type to represent stop bit options
+// - conformDataRate() checks the data rate and sets it to 9600 if it is not
+//   one of the known good values
 // - constructSerialParameters() returns the bit flags used to start an Arduino
 //   HardwareSerial device
 // - printParityEnumText() prints a text string to identify a parityEnum value

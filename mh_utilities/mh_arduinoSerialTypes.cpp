@@ -1,7 +1,6 @@
 #include <Arduino.h>
 
-#include "/home/trrooney/MountainHeritage/thermostat_reader/software/mh_arduinoSerialTypes.h"
-
+#include "mh_arduinoSerialTypes.h"
 
 uint8_t
 mh_temperatureSensing::
@@ -14,45 +13,45 @@ constructSerialParameters(const int dataBits,
     switch (dataBits)
     {
         case 5:
-            retVal &= (uint8_t) DATA_BITS_5;
+            retVal |= (uint8_t) DATA_BITS_5;
             break;
         case 6:
-            retVal &= (uint8_t) DATA_BITS_6;
+            retVal |= (uint8_t) DATA_BITS_6;
             break;
         case 7:
-            retVal &= (uint8_t) DATA_BITS_7;
+            retVal |= (uint8_t) DATA_BITS_7;
             break;
         case 8:
-            retVal &= (uint8_t) DATA_BITS_8;
+            retVal |= (uint8_t) DATA_BITS_8;
             break;
         default:
-            retVal &= (uint8_t) DATA_BITS_8;
+            retVal |= (uint8_t) DATA_BITS_8;
             break;
     } // end switch (dataBits)
     // set flags for parity
     switch (parity)
     {
         case PARITY_NONE:
-            retVal &= (uint8_t) PARITY_NONE;
+            retVal |= (uint8_t) PARITY_NONE;
             break;
         case PARITY_EVEN:
-            retVal &= (uint8_t) PARITY_EVEN;
+            retVal |= (uint8_t) PARITY_EVEN;
             break;
         case PARITY_ODD:
-            retVal &= (uint8_t) PARITY_ODD;
+            retVal |= (uint8_t) PARITY_ODD;
             break;
         default:
-            retVal &= (uint8_t) PARITY_NONE;
+            retVal |= (uint8_t) PARITY_NONE;
             break;
     } // end switch (parity)
     // set flags for stop bits
     if (stopBits == 2)
     {
-        retVal &= (uint8_t) STOP_BITS_2;
+        retVal |= (uint8_t) STOP_BITS_2;
     }
     else
     {
-        retVal &= (uint8_t) STOP_BITS_1;
+        retVal |= (uint8_t) STOP_BITS_1;
     } // end if (stopBits == 2)
     return retVal;
 } // end uint8_t constructSerialParameters(const int dataBits, ... )
@@ -117,7 +116,7 @@ printParityEnumText(Stream &serialDevice,
         break;
     } // end switch (parityValue)
     return retVal;
-} // end int printParityEnumText(HardwareSerial &serialDevice, const parityEnum parityValue)
+} // end int printParityEnumText(Stream &serialDevice, const parityEnum parityValue)
 
 
 
