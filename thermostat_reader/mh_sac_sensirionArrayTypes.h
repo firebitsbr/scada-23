@@ -34,6 +34,7 @@ typedef uint8_t SAC_FLAGS_TYPE;
 // that can be controlled (one bit per sensor)
 
 // enumerated type to represent measurement types
+typedef uint8_t SAC_MEASTYPE_TYPE;
 enum measurementTypeEnum { MH_NO_MEASUREMENT = 0,
                            MH_TEMP_SENSIRION = 1,
                            MH_HUMI_SENSIRION = 2,
