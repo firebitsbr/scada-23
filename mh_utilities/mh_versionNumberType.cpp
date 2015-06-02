@@ -52,21 +52,6 @@ encodeVersionNumber(char* bufferPtr,
 } // end encodeVersionNumber(char* bufferPtr, ... )
 
 
-void
-mh_temperatureSensing::
-setVersionNumber(MH_VERSION_TYPE &version,
-                 const int majorVersion,
-                 const int minorVersion,
-                 const int revision,
-                 const char build)
-{
-    version[0] = (char) majorVersion;
-    version[1] = (char) minorVersion;
-    version[2] = (char) revision;
-    version[3] = build;
-} // end void encodeVersionNumber(MH_VERSION_TYPE &version, ... )
-
-
 int
 mh_temperatureSensing::
 outputVersionNumber(Stream &serialDevice,
@@ -91,8 +76,8 @@ testVersionNumber(Stream &serialDevice)
     int retVal = 0;
     serialDevice.println("begin test versionNumberType");
     // allocate
-    MH_VERSION_TYPE version = { 1, 2, 3, 'a' };
-    serialDevice.println("version number allocated as 1.2.3a");
+    MH_VERSION_TYPE version PROGMEM = { 1, 2, 3, 'a' };
+    serialDevice.println("version number allocated as { 0x01, 0x02, 0x03, 'a' }");
     if ( (version[0] != 1) ||
          (version[1] != 2) ||
          (version[2] != 3) ||
@@ -101,26 +86,19 @@ testVersionNumber(Stream &serialDevice)
         serialDevice.println("ERROR - allocation error");
         retVal -= 1;
     }
+    for (size_t i = 0; i < MH_VERSION_TYPE_SIZE; i++)
+    {
+        char outChar =  pgm_read_byte_near(version[i]);
+        serialDevice.print(">");
+        serialDevice.print(('0' + outChar));
+        serialDevice.println("<");
+    }
     // print
     serialDevice.print("version prints as ");
     int bytesWritten = outputVersionNumber(serialDevice, version);
     serialDevice.print(", ");
     serialDevice.print(bytesWritten);
     serialDevice.println(" bytes written");
-    // encode
-    setVersionNumber(version, 4, 5, 6, 'b');
-    serialDevice.println("version number set to 4.5.6b");
-    if ( (version[0] != 4) ||
-         (version[1] != 5) ||
-         (version[2] != 6) ||
-         (version[3] != 'b')    )
-    {
-        serialDevice.println("ERROR - set error");
-        retVal -= 2;
-    }
-    serialDevice.print("version prints as ");
-    outputVersionNumber(serialDevice, version);
-    serialDevice.println();
     // decode
     int majorVersion = 0;
     int minorVersion = 0;
@@ -131,10 +109,10 @@ testVersionNumber(Stream &serialDevice)
                         minorVersion,
                         revision,
                         build);
-    if ( (majorVersion != 4) ||
-         (minorVersion != 5) ||
-         (revision != 6) ||
-         (build != 'b')    )
+    if ( (majorVersion != 1) ||
+         (minorVersion != 2) ||
+         (revision != 3) ||
+         (build != 'a')    )
     {
         serialDevice.println("ERROR - decoding error");
         retVal -= 4;
