@@ -1,6 +1,15 @@
-#include <Arduino.h>
-
 #include "mh_arduinoSerialTypes.h"
+
+// determine environment
+#ifdef ARDUINO
+#include <Arduino.h>
+#elif __linux__
+#error "mh_encodeData linux implementation incomplete"
+#elif _WIN32
+#error "mh_encodeData windows implementation incomplete"
+#else
+#error "mh_encodeData unknown compilation environment"
+#endif // determine environment
 
 uint8_t
 mh_temperatureSensing::
