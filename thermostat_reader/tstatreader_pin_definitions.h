@@ -1,10 +1,12 @@
 #ifndef MH_SAC_TSTATREADER_PIN_DEFINITIONS_H_INCLUDED
 #define MH_SAC_TSTATREADER_PIN_DEFINITIONS_H_INCLUDED
 
-// this file defines the pins and devices required for sensor interface and serial communication
-// using the sensor interface board thermostat_reader_001
-// sensor interface can be any two-wire protocol.
-// serial communication is via RS-485.
+/*! \brief This file defines the pins and devices required for sensor interface and serial communication
+ *  using the sensor interface board thermostat_reader_001
+ *
+ * sensor interface can be any two-wire protocol.
+ * serial communication is via RS-485.
+ */
 
 const int numDevices = 8;
 
