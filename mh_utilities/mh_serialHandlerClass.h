@@ -1,18 +1,19 @@
 #ifndef MH_SERIALHANDLERCLASS_H
 #define MH_SERIALHANDLERCLASS_H
 
-// serialHandlerClass is a base class intended for use in
-// wrapper classes such as hardwareSerialWrapperClass,
-// softwareSerialWrapperClass, rs485WrapperClass, with the objective
-// of accumulating classes for cross-platform development.
-//
-// serialHandlerClass is intended to allow common development of
-// code for use across microcontrollers and supervisory systems,
-// including servers and desktops.
-//
-// static methods are provided where appropriate to allow use of class
-// methods without a class instance
-//
+/*! \brief serialHandlerClass is a base class intended for use in
+ * wrapper classes such as hardwareSerialWrapperClass,
+ * softwareSerialWrapperClass, rs485WrapperClass, with the objective
+ * of accumulating classes for cross-platform development.
+ *
+ * serialHandlerClass is intended to allow common development of
+ * code for use across microcontrollers and supervisory systems,
+ * including servers and desktops.
+ *
+ * Static methods are provided where appropriate to allow use of class
+ * methods without a class instance
+ */
+
 // shcDefaultStream allows direct use of the base class without extension
 // NOTE - without extension the base class supports only a single,
 //        effectively static, interface
@@ -30,25 +31,25 @@
 // development.
 //
 
-// Notes:
+/// Usage notes:
 // - shcDefaultStream is defined to allow use of the base class without
 //   error and without additional programming.  The reference shcDefaultStream
 //   can be changed to any stream.
-// - Serial control functions (setDataRate(), setDataBits(), etc.) set member variables only.
-//   To change serial operating parameters start() must be called changing member variables.
-// - Serial parameters are checked in conformDataRate() and constructSerialParameters() as part of the
-//   start() call.  The calling value for data rate may be modified.
-//   -- Default communication parameters are 9600-N-8-1.  Invalid calling parameters
-//      result in substitution of the default value for that parameter.
-//   -- start() will modify dataRate (or m_dataRate) to conform to permitted values
+/// - Serial control functions (setDataRate(), setDataBits(), etc.) set member variables only.
+///   To change serial operating parameters start() must be called.
+/// - Serial parameters are checked in conformDataRate() and constructSerialParameters() as part of the
+///   start() call.  The calling value for data rate may be modified.
+///   -- Default communication parameters are 9600-N-8-1.  Invalid calling parameters
+///      result in substitution of the default value for that parameter.
+///   -- start() will modify dataRate (or m_dataRate) to conform to permitted values
 // - initialize return values:
 //      -1 = error setting data rate
 //      -2 = error setting data bits
 //      -4 = error setting parity
 //      -8 = error setting stop bits
 //      error value is cumulative of all errors.
-// - This class has not been made thread safe.  Mutexes or other protections should be added
-//   to using applications or wrapper classes if multithreaded use is anticipated.
+/// - This class has not been made thread safe.  Mutexes or other protections should be added
+///   to using applications or wrapper classes if multithreaded use is anticipated.
 
 // determine environment
 #ifdef ARDUINO
@@ -80,7 +81,6 @@ typedef HardwareSerial shcDefaultSerialType;
 #else
 #error "unknown environment, default output not defined"
 #endif // determine environment
-
 
 class serialHandlerClass:
     public Stream
@@ -118,12 +118,13 @@ public:
     virtual int peek(void);
     virtual void flush(void);
     virtual size_t write(uint8_t outByte);
-protected:
     int initialize(const long int dataRate,
                    const int dataBits,
                    const parityEnum parityOption,
                    const int stopBits);
     void initializeNoAlloc(void);
+protected:
+    // no methods
 public:
     static const long int defaultDataRate;
     static const int defaultDataBits;

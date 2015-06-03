@@ -1,7 +1,6 @@
 // determine environment
 #ifdef ARDUINO
 #include <Arduino.h>
-#include "mh_arduinoSerialTypes.h"
 #elif __linux__
 #error "mh_serialHandlerClass linux implementation incomplete"
 #elif _WIN32
@@ -11,19 +10,20 @@
 #endif // determine environment
 
 
+#include "mh_arduinoSerialTypes.h"
 #include "mh_serialHandlerClass.h"
 
 
-// uncomment below as needed to debug methods
-// debugStream must be defined for all debug blocks
-// static Stream& debugStream = Serial;
-// #define MH_SHC_DEBUG_DATARATE
-// #define MH_SHC_DEBUG_DATABITS
-// #define MH_SHC_DEBUG_PARITY
-// #define MH_SHC_DEBUG_STOPBITS
-// #define MH_SHC_DEBUG_START
-
+// define default values
+#ifdef ARDUINO
 mh_temperatureSensing::shcDefaultSerialType& shcDefaultStream = Serial;
+#elif __linux__
+#error "mh_serialHandlerClass linux default output not defined"
+#elif _WIN32
+#error "mh_serialHandlerClass windows default output not defined"
+#else
+#error "mh_serialHandlerClass unknown compilation environment, default output not defined"
+#endif // determine environment
 
 // define testStream for output of test data
 #ifdef MH_SHC_INCLUDE_TEST
@@ -37,6 +37,15 @@ static HardwareSerial& testStream = Serial;
 #error "unknown environment, test output not defined"
 #endif // determine environment
 #endif // MH_SHC_INCLUDE_TEST
+
+// uncomment below as needed to debug methods
+// debugStream must be defined for all debug blocks
+// static Stream& debugStream = Serial;
+// #define MH_SHC_DEBUG_DATARATE
+// #define MH_SHC_DEBUG_DATABITS
+// #define MH_SHC_DEBUG_PARITY
+// #define MH_SHC_DEBUG_STOPBITS
+// #define MH_SHC_DEBUG_START
 
 const long int
 mh_temperatureSensing::serialHandlerClass::
