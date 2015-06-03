@@ -1,8 +1,17 @@
 
+// determine environment
+#ifdef ARDUINO
 #include <Arduino.h>
-#include <Sensirion.h>
+#elif __linux__
+#error "mh_sac_sensirionArrayTypes linux implementation incomplete"
+#elif _WIN32
+#error "mh_sac_sensirionArrayTypes windows implementation incomplete"
+#else
+#error "mh_sac_sensirionArrayTypes unknown compilation environment"
+#endif // determine environment
 
-#include "mh_sac_sensirionArrayTypes.h"
+#include <stdint.h>
+#include <mh_sac_sensirionArrayTypes.h>
 
 
 mh_temperatureSensing::SAC_ERROR_TYPE

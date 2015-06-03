@@ -1,12 +1,22 @@
+// determine environment
+#ifdef ARDUINO
 #include <Arduino.h>
-#include <Sensirion.h>
+#elif __linux__
+#error "mh_sac_sensirionArrayClass linux implementation incomplete"
+#elif _WIN32
+#error "mh_sac_sensirionArrayClass windows implementation incomplete"
+#else
+#error "mh_sac_sensirionArrayClass unknown compilation environment"
+#endif // determine environment
 
-#include "mh_sac_sensirionArrayTypes.h"
-#include "mh_sac_sensirionArrayClass.h"
+#include <Sensirion.h>
+#include <mh_sac_sensirionArrayTypes.h>
+#include <mh_sac_sensirionArrayClass.h>
 
 // WARNINGS and notes
 // see sensirionArrayClass.h for warnings and notes
 
+// uncomment below for debug output
 // #define MH_DEBUG_ALLOCATION
 
 mh_temperatureSensing::sensirionArrayClass::
@@ -123,6 +133,7 @@ initialize(const int numSensors,
             // set the bit field of active sensors to the set of
             // sensors properly allocated
             m_sensorActiveFlags = m_sensorActiveMask;
+            m_numSensors = sensorsAllocated;
         }
         else
         {
@@ -192,8 +203,4 @@ setState(sensirionSensorStateEnum newState)
     return lastState;
 } // end sensirionSensorStateEnum setState()
 
-// development notes:
-// initial prototype prior to conversion to class
-// Binary sketch size: 8,508 bytes (of a 30,720 byte maximum)
-// initial prototype after conversion to class
 

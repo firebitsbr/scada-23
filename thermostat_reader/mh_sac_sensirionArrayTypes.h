@@ -1,13 +1,43 @@
 #ifndef MH_SAC_SENSIRIONARRAYTYPES_H_INCLUDED
 #define MH_SAC_SENSIRIONARRAYTYPES_H_INCLUDED
 
+/*! \brief Type definitions supporting the sensirionArrayClass
+ *
+ *  Type definitions are provided to support consistent variable
+ *  definition across packages and platforms.
+ *  Symbols are defined for states and constants to support development
+ *  and maintenance.
+ *  Print utilities are provided to support debug output and user interfaces.
+ */
+
+// determine environment
+#ifdef ARDUINO
+#include <Arduino.h>
+#elif __linux__
+// no action for linux implementation
+#elif _WIN32
+#error "mh_sac_sensirionArrayTypes windows implementation incomplete"
+#else
+#error "mh_sac_sensirionArrayTypes unknown compilation environment"
+#endif // determine environment
+
+#include <stdint.h>
+
 namespace mh_temperatureSensing
 {
 
-// enumerated type to track sensor state
-// also contains values for use in an sensor array reading
+// type definitions for raw and formatted data
+// note that uint16_t and float are required in calls to
+// sensor functions in class Sensirion
+typedef uint16_t SAC_RAW_TYPE;
+typedef float SAC_CONVERTED_TYPE;
 
-// sensor state
+// data types for encoding messages
+typedef uint16_t SAC_SIZE_TYPE;
+typedef uint8_t SAC_COUNT_TYPE;
+
+// enumerated type to track sensor state
+// also contains values for use in an sensor array reading.
 // intended for use in state machine implementations
 typedef uint8_t SAC_STATE_TYPE;
 enum sensirionSensorStateEnum { SSS_UNINIT = 0,
