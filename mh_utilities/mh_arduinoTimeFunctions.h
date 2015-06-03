@@ -1,20 +1,33 @@
 #ifndef ARDUINOTIMEFUNCTIONS_H_INCLUDED
 #define ARDUINOTIMEFUNCTIONS_H_INCLUDED
 
-// simple time functions to handle near-term events
+/*! \brief Simple time functions to handle near-term events
+ *
+ * Notes:
+ * - microsElapsed() and millisElapsed() are limited by the maximum unsigned values
+ *   that can be represented by their calling and return type.
+ * - actionDue() only works correctly if time elapsed is less than half the maximum
+ *   value that can be represented by an unsigned long value.  Wrapping from a value
+ *   near the maximum represented value to a value near zero is handled; however,
+ *   if the time elapsed exceeds half of the maximum represented value the function
+ *   will return 'false' in error.  Similarly, actionDue() only works correctly for
+ *   events scheduled less than half of the maximum represented value into the future.
+ *   For events more than half of the maximum represented value in the future, the
+ *   funtion will return 'true' in error.
+ */
 
-// Notes:
-// - microsElapsed() and millisElapsed() are limited by the maximum unsigned values
-//   that can be represented by their calling and return type.
-// - actionDue() only works correctly if time elapsed is less than half the maximum
-//   value that can be represented by an unsigned long value.  Wrapping from a value
-//   near the maximum represented value to a value near zero is handled; however,
-//   if the time elapsed exceeds half of the maximum represented value the function
-//   will return 'false' in error.  Similarly, actionDue() only works correctly for
-//   events scheduled less than half of the maximum represented value into the future.
-//   For events more than half of the maximum represented value in the future, the
-//   funtion will return 'true' in error.
+// determine environment
+#ifdef ARDUINO
+#include <Arduino.h>
+#elif __linux__
+#error "mh_encodeData linux implementation incomplete"
+#elif _WIN32
+#error "mh_encodeData windows implementation incomplete"
+#else
+#error "mh_encodeData unknown compilation environment"
+#endif // determine environment
 
+// uncomment the line below to include test methods
 // #define MH_INCLUDE_ARDUINOTIMEFUNCTIONS_TEST_CODE
 
 namespace mh_timeFunctions

@@ -8,10 +8,10 @@
 //   For events more than half of the maximum represented value in the future, the
 //   funtion will return 'true' in error.
 
-// TODO: convert unsignedTimeDifference to template<typename T>
-// TODO: convert actionDue to template<typename T>
-// TODO: convert millisTimeout() and microsTimeout() to call a
-//       single set of instructions a function pointer to the
+// TODO: consider conversion of unsignedTimeDifference to template<typename T>
+// TODO: consider conversion ofactionDue to template<typename T>
+// TODO: consider conversion of millisTimeout() and microsTimeout() to call a
+//       single set of instructions with a function pointer to the
 //       current time function
 
 // determine environment
@@ -108,6 +108,12 @@ microsTimeout(const unsigned long startMicros, const unsigned long timeoutMicros
 
 
 // Arduino-similar time functions
+// use with other microcontrollers and operating systems requires
+// defininition of the following methods:
+// delay()
+// delayMicroseconds()
+// millis()
+// micros()
 #ifdef ARDUINO
     // no additional action
 #elif __linux__
