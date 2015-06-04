@@ -72,6 +72,8 @@ exerciseSensirionArrayReaderClass(Stream &serialDevice,
     const int arraySize = 8;
     SAC_CONVERTED_TYPE dataArray[arraySize];
 
+    sensirionReader->clearErrors();
+
     for (int rounds=0; rounds < 3; rounds++)
     {
         // read temperature
@@ -80,8 +82,12 @@ exerciseSensirionArrayReaderClass(Stream &serialDevice,
         delay(sensirionReader->getTempTimeoutMillis());
         SAC_FLAGS_TYPE dataReadyFlags = 0;
         sensirionReader->checkSensorsTemp(dataReadyFlags);
-        serialDevice.print(F("dataReadyFlags = "));
-        serialDevice.println(dataReadyFlags, HEX);
+        serialDevice.print(F("returned from checkSensorsTemp, dataReadyFlags   = ( "));
+        printSensirionFlagsType(sarcDebugStream, dataReadyFlags);
+        sarcDebugStream.println(F(" )"));
+        serialDevice.print(F("returned from checkSensorsTemp, m_tempErrorFlags = ( "));
+        printSensirionFlagsType(sarcDebugStream, sensirionReader->m_tempErrorFlags);
+        sarcDebugStream.println(F(" )"));
         sensirionReader->printTemperatures(serialDevice, dataReadyFlags);
         errors = sensirionReader->encodeTemperatures(buffer, bufferSize, bytesEncoded, activeSensors);
         decodeErrors = decodeDataArray(buffer,
@@ -91,8 +97,8 @@ exerciseSensirionArrayReaderClass(Stream &serialDevice,
                                        reportedType,
                                        reportedErrors,
                                        valuesStated,
-                                       valuesReceived,
                                        valuesInError,
+                                       valuesReceived,
                                        arraySize,
                                        dataArray);
         serialDevice.print(F("Read errors: "));
@@ -123,12 +129,16 @@ exerciseSensirionArrayReaderClass(Stream &serialDevice,
         serialDevice.print(F("  "));
         printSensirionFlagsType(serialDevice, valuesInError);
         serialDevice.println();
-        serialDevice.println(F("Data:"));
+        serialDevice.println(F("Data array:"));
         for (int i=0; i<arraySize; i++)
         {
             serialDevice.print(i);
             serialDevice.print(F("  "));
-            serialDevice.println(dataArray[i]);
+            serialDevice.print(dataArray[i]);
+            serialDevice.print(F("  (read as "));
+            serialDevice.print(sensirionReader->m_lastTemperatureArray[i]);
+            serialDevice.println(F(")"));
+
         } // end for (i)
         serialDevice.println(F("end of temperatures\n\n"));
 
@@ -138,8 +148,12 @@ exerciseSensirionArrayReaderClass(Stream &serialDevice,
         delay(sensirionReader->getHumidTimeoutMillis());
         dataReadyFlags = 0;
         sensirionReader->checkSensorsHumid(dataReadyFlags);
-        serialDevice.print(F("dataReadyFlags = "));
-        serialDevice.println(dataReadyFlags, HEX);
+        serialDevice.print(F("returned from checkSensorsHumid, dataReadyFlags   = ( "));
+        printSensirionFlagsType(sarcDebugStream, dataReadyFlags);
+        sarcDebugStream.println(F(" )"));
+        serialDevice.print(F("returned from checkSensorsHumid, m_humidErrorFlags = ( "));
+        printSensirionFlagsType(sarcDebugStream, sensirionReader->m_humidErrorFlags);
+        sarcDebugStream.println(F(" )"));
         sensirionReader->printHumidities(serialDevice, dataReadyFlags);
         errors = sensirionReader->encodeHumidities(buffer, bufferSize, bytesEncoded, activeSensors);
         decodeErrors = decodeDataArray(buffer,
@@ -149,8 +163,8 @@ exerciseSensirionArrayReaderClass(Stream &serialDevice,
                                        reportedType,
                                        reportedErrors,
                                        valuesStated,
-                                       valuesReceived,
                                        valuesInError,
+                                       valuesReceived,
                                        arraySize,
                                        dataArray);
         serialDevice.print(F("Bytes decoded "));
@@ -175,12 +189,15 @@ exerciseSensirionArrayReaderClass(Stream &serialDevice,
         serialDevice.print(F("  "));
         printSensirionFlagsType(serialDevice, valuesInError);
         serialDevice.println();
-        serialDevice.println(F("Data:"));
+        serialDevice.println(F("Data array:"));
         for (int i=0; i<arraySize; i++)
         {
             serialDevice.print(i);
             serialDevice.print("  ");
-            serialDevice.println(dataArray[i]);
+            serialDevice.print(dataArray[i]);
+            serialDevice.print(F("  (read as "));
+            serialDevice.print(sensirionReader->m_lastHumidityArray[i]);
+            serialDevice.println(F(")"));
         } // end for (i)
         serialDevice.println(F("end of humidity\n\n"));
 
