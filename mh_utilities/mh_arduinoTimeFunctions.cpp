@@ -107,6 +107,19 @@ microsTimeout(const unsigned long startMicros, const unsigned long timeoutMicros
 } // end boolean microsTimeout()
 
 
+int
+mh_timeFunctions::
+checkDuration(const unsigned long duration)
+{
+    int retVal = 0;
+    if (duration > (HALF_MAX_UNSIGNED_LONG - (unsigned long) 2))
+    {
+        retVal = -1;
+    }
+    return retVal;
+} // end int checkPinValue(const pinLevelEnum bitLevel)
+
+
 // Arduino-similar time functions
 // use with other microcontrollers and operating systems requires
 // defininition of the following methods:

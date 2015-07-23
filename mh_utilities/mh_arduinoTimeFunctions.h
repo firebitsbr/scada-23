@@ -53,6 +53,10 @@ boolean microsTimeout(const unsigned long startMicros,
                       const unsigned long timeoutMicros,
                       const unsigned long wrapValue = HALF_MAX_UNSIGNED_LONG);
 
+/// checkDuration() verifies duration is within the range
+/// [0, (HALF_MAX_UNSIGNED_LONG - 2)]
+int checkDuration(const unsigned long duration);
+
 // use with other microcontrollers and operating systems requires
 // defininition of the following methods:
 // delay()
