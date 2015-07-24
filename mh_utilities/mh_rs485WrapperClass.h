@@ -112,10 +112,10 @@ protected:
 protected:
     static const int defaultTxPin;
     static const int defaultRxPin;
-    int m_txEnablePin = defaultTxPin;
-    int m_rxDisablePin = defaultRxPin;
-    boolean m_transmitterIsOn = false;
-    T_SerialBase *m_serialBasePtr = NULL;
+    int m_txEnablePin;
+    int m_rxDisablePin;
+    boolean m_transmitterIsOn;
+    T_SerialBase *m_serialBasePtr;
 };
 
 

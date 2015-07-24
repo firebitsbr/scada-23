@@ -68,25 +68,25 @@ protected:
 protected:
 public:
     // number of sensors in array
-    uint8_t m_numSensors = 0;
+    uint8_t m_numSensors;
     // maximum number of sensors in array
     // initially implemented max is 8 (uint8_t for flags type)
     // maximum can be modified to 16, 32, 64 by changing typedef SAC_FLAGS_TYPE
     static const uint8_t maxSensors = 8 * sizeof(SAC_FLAGS_TYPE);
     // pointer to array of Sensirion devices
-    Sensirion **m_sensorPtrArray = NULL;
+    Sensirion **m_sensorPtrArray;
     // bit fields to indicate what sensors are active
     // sensors currently active
-    SAC_FLAGS_TYPE m_sensorActiveFlags = 0x00;
+    SAC_FLAGS_TYPE m_sensorActiveFlags;
     // mask of sensors present and properly initialized
-    SAC_FLAGS_TYPE m_sensorActiveMask = 0x00;
+    SAC_FLAGS_TYPE m_sensorActiveMask;
     // state of array
     // indicates both initialization and current state for use in state machine
-    sensirionSensorStateEnum m_sensorState = SSS_UNINIT;
+    sensirionSensorStateEnum m_sensorState;
     // error flags
     // can indicate success (0) or multiple errors based on the bits set
     // see mh_sac_sensirionArrayTypes.h for enumeration of the possible errors
-    SAC_ERROR_TYPE m_errorFlags = SAC_SUCCESS;
+    SAC_ERROR_TYPE m_errorFlags;
 }; // end class sensirionArrayClass
 
 } // close namespace mh_temperatureSensing

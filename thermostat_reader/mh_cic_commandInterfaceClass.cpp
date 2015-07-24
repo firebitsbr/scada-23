@@ -186,6 +186,7 @@ initializeLocalNoAlloc(const CIC_ADDRESS_TYPE cicAddress)
     m_receivingMessage = false;
     m_readErrors = COMM_SUCCESS;
     m_receivedSourceAddress = 0;
+    m_receivedDestinationAddress = 0;
     m_outgoingDestinationAddress = 0;
     m_receivedMessageNumber = 0;
     m_outgoingMessageCounter = 0;

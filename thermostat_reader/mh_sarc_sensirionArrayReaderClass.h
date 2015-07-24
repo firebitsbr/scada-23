@@ -181,15 +181,15 @@ public:
 protected:
     // flags to control non-blocking measurements
     // flags to indicate sensing in process
-    SAC_FLAGS_TYPE m_tempInProcessFlags = 0;
-    SAC_FLAGS_TYPE m_humidInProcessFlags = 0;
+    SAC_FLAGS_TYPE m_tempInProcessFlags;
+    SAC_FLAGS_TYPE m_humidInProcessFlags;
     // flags to indicate error on last operation
-    SAC_FLAGS_TYPE m_resolutionErrorFlags = 0;
-    SAC_FLAGS_TYPE m_tempErrorFlags = 0;
-    SAC_FLAGS_TYPE m_humidErrorFlags = 0;
+    SAC_FLAGS_TYPE m_resolutionErrorFlags;
+    SAC_FLAGS_TYPE m_tempErrorFlags;
+    SAC_FLAGS_TYPE m_humidErrorFlags;
     // variables to control measurement timeout
-    unsigned long m_tempMeasStartTime = 0;
-    unsigned long m_humidMeasStartTime = 0;
+    unsigned long m_tempMeasStartTime;
+    unsigned long m_humidMeasStartTime;
     // temperature and humidity timeout values
     // sensor times are:
     //   low resolution temperature    80 msec
@@ -202,14 +202,14 @@ protected:
     static const unsigned long highResTempTimeout = 480ul;
     static const unsigned long lowResHumidTimeout = 30ul;
     static const unsigned long highResHumidTimeout = 120ul;
-    unsigned long m_tempTimeoutMillis = highResTempTimeout;
-    unsigned long m_humidTimeoutMillis = highResHumidTimeout;
+    unsigned long m_tempTimeoutMillis;
+    unsigned long m_humidTimeoutMillis;
     // arrays to store measurement data and times
     // types are per Sensirion.h in Arduino Sensirion library
-    SAC_SIZE_TYPE m_readerArraySize = 0;
-    SAC_RAW_TYPE *m_rawDataArray = NULL;
-    SAC_CONVERTED_TYPE *m_lastTemperatureArray = NULL;
-    SAC_CONVERTED_TYPE *m_lastHumidityArray = NULL;
+    SAC_SIZE_TYPE m_readerArraySize;
+    SAC_RAW_TYPE *m_rawDataArray;
+    SAC_CONVERTED_TYPE *m_lastTemperatureArray;
+    SAC_CONVERTED_TYPE *m_lastHumidityArray;
 public:
     // length of status message
     static const SAC_SIZE_TYPE statusMessageLength;

@@ -131,10 +131,10 @@ public:
     static const parityEnum defaultParityOption;
     static const int defaultStopBits;
 protected:
-    long int m_dataRate = defaultDataRate;
-    int m_dataBits = defaultDataBits;
-    parityEnum m_paritySetting = defaultParityOption;
-    int m_stopBits = defaultStopBits;
+    long int m_dataRate;
+    int m_dataBits;
+    parityEnum m_paritySetting;
+    int m_stopBits;
 
 }; // end class serialHandlerClass
 
