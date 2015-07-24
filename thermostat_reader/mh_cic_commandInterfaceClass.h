@@ -4,6 +4,7 @@
 // determine environment
 #ifdef ARDUINO
 #include <Arduino.h>
+#include <HardwareSerial.h>
 #elif __linux__
 #error "mh_cic_commandInterfaceClass linux implementation incomplete"
 #elif _WIN32
@@ -48,6 +49,8 @@
  *  - if the parameter m_hardwareSerialMaxBytes is incorrect communication will be unreliable
  *    -- if m_hardwareSerialMaxBytes is too small, received bytes will be discarded prior to transmission
  *    -- if m_hardwareSerialMaxBytes is too large, a busy serial line may not be detected
+ *  - if adding new constructors, all calls to initializeLocalNoAlloc() must be
+ *    prior to allocation of arrays (call sets m_payloadBufferPtr to NULL)
  */
 
 // Usage notes:
@@ -358,26 +361,26 @@ public:
                                        COM_ERROR_TYPE &commErrors);
 protected:
 public:
-    CIC_ADDRESS_TYPE m_myAddress = 0;
-    boolean m_receivingMessage = false;
-    COM_ERROR_TYPE m_readErrors = COMM_SUCCESS;
-    CIC_ADDRESS_TYPE m_receivedSourceAddress = 0;
-    CIC_ADDRESS_TYPE m_receivedDestinationAddress = 0;
-    CIC_ADDRESS_TYPE m_outgoingDestinationAddress = 0;
-    CIC_MSG_NUM_TYPE m_receivedMessageNumber = 0;
-    CIC_MSG_NUM_TYPE m_outgoingMessageCounter = 0;
-    CIC_MESSAGE_TYPE m_receivedMessageType = CIC_MSG_NONE;
-    CIC_MESSAGE_TYPE m_outgoingMessageType = CIC_MSG_NONE;
-    CIC_SIZE_TYPE m_receivedSizeStated = 0;
-    size_t m_receivedBytesRead = 0;
-    size_t m_payloadBufferSize = 0;
-    size_t m_payloadByteCounter = 0;
-    unsigned long m_lastByteReceivedMicros = 0;
-    int m_unusedReadBytes = 0;
-    bufferSourceEnum m_bufferSource = NO_BUFFER;
-    char* m_payloadBufferPtr = NULL;
-    cicStateEnum m_cicState = CIC_UNINIT;
-    CIC_ERROR_TYPE m_errorFlags = CIC_SUCCESS;
+    CIC_ADDRESS_TYPE m_myAddress;
+    boolean m_receivingMessage;
+    COM_ERROR_TYPE m_readErrors;
+    CIC_ADDRESS_TYPE m_receivedSourceAddress;
+    CIC_ADDRESS_TYPE m_receivedDestinationAddress;
+    CIC_ADDRESS_TYPE m_outgoingDestinationAddress;
+    CIC_MSG_NUM_TYPE m_receivedMessageNumber;
+    CIC_MSG_NUM_TYPE m_outgoingMessageCounter;
+    CIC_MESSAGE_TYPE m_receivedMessageType;
+    CIC_MESSAGE_TYPE m_outgoingMessageType;
+    CIC_SIZE_TYPE m_receivedSizeStated;
+    size_t m_receivedBytesRead;
+    size_t m_payloadBufferSize;
+    size_t m_payloadByteCounter;
+    unsigned long m_lastByteReceivedMicros;
+    int m_unusedReadBytes;
+    bufferSourceEnum m_bufferSource;
+    char* m_payloadBufferPtr;
+    cicStateEnum m_cicState;
+    CIC_ERROR_TYPE m_errorFlags;
 public:
     static const MH_VERSION_TYPE versionNumber;
     static const int defaultBufferSize;
